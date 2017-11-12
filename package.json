@@ -1,0 +1,19 @@
+{
+  "name": "chatcat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "engines": {
+    "node": "8.9.0"
+  },
+  "dependencies": {
+    "ejs": "^2.5.7",
+    "express": "4.16.2"
+  }
+}
