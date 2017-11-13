@@ -1,5 +1,11 @@
 {
 	"HOST": "http://localhost:3000",
 	"DB_URI": "mongodb://root:root@ds155315.mlab.com:55315/chatchatest",
-	"SESSION_SECRET": "catscanfly"
+	"SESSION_SECRET": "catscanfly",
+	"FB": {
+		"APP_ID" : "127327484625068",
+		"APP_SECRET": "22ad5c20c80fceb52bcf03b4ff30a486",
+		"CALLBACK_URL": "//localhost:3000/auth/facebook/callback",
+		"PROFILE_FIELDS": ["id", "displayName", "photos"]
+	}
 }
