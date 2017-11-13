@@ -23,6 +23,10 @@ module.exports = () => {
 				successRedirect: '/rooms',
 				failureRedirect: '/'
 			}),
+			'/logout': (req, res, next) => {
+				req.logout();
+				res.redirect('/')
+			}
 		}, 
 		'post': {},
 		'NA': (req, res, next) => {
