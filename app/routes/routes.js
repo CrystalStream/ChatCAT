@@ -11,6 +11,9 @@ module.exports = () => {
 			},
 			'/chat': (req, res, next) => {
 				res.render('chatroom')
+			},
+			'/getSession': (req, res, next) => {
+				res.send("My Favorite Color: " + req.session.favColor)
 			}
 		}, 
 		'post': {},

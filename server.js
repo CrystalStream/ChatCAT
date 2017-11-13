@@ -9,6 +9,9 @@ const chatCat = require('./app');
 // Set the renderer
 app.set('view engine', 'ejs');
 
+// Setup session configuration
+app.use(chatCat.session)
+
 // Set up the router
 app.use('/', chatCat.router)
 

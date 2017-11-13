@@ -1,4 +1,5 @@
 {
 	"HOST": "http://localhost:3000",
-	"DB_URI": "mongodb://root:root@ds155315.mlab.com:55315/chatchatest"
+	"DB_URI": "mongodb://root:root@ds155315.mlab.com:55315/chatchatest",
+	"SESSION_SECRET": "catscanfly"
 }
