@@ -4,6 +4,7 @@ const passport = require('passport');
 const config = require('../config');
 const helpers = require('../helpers');
 const fbStrategy = require('passport-facebook').Strategy;
+const twStrategy = require('passport-twitter').Strategy;
 
 module.exports = () => {
 	// Storing the session with the unique id of mongoDB
@@ -34,11 +35,22 @@ module.exports = () => {
 			})
 	}
 
+	// Login with FB
 	passport.use( new fbStrategy({
 			clientID: config.FB.APP_ID,
 			clientSecret: config.FB.APP_SECRET,
 			callbackURL: config.FB.CALLBACK_URL,
 			profileFields: config.FB.PROFILE_FIELDS
+		},
+		authProcessor)
+	);
+
+	// Login with twitter
+	passport.use( new twStrategy({
+			consumerKey: config.TW.API_KEY,
+			consumerSecret: config.TW.API_SECRET,
+			callbackURL: config.TW.CALLBACK_URL,
+			profileFields: config.TW.PROFILE_FIELDS
 		},
 		authProcessor)
 	);
