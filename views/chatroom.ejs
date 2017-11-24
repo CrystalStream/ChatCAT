@@ -6,6 +6,7 @@
 	<link rel="stylesheet" href="/css/chatroomStyles.css">
   <script src="/js/jquery-2.1.4.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
+  <script src="https://widget.cloudinary.com/global/all.js"></script>
 
   <script>
     $( () => {
@@ -16,6 +17,7 @@
       let chatUsers = $('.chatUsers');
       let chatInput = $('input[name="userInput"]');
       let chatMessDiv = $('.chatMessages');
+      let filePicker = $('#uploadFile');
 
       socket.on('connect', () => {
         socket.emit('join', {
@@ -73,6 +75,28 @@
         }
       });
 
+      filePicker.on('click', function(evt) {
+        cloudinary.openUploadWidget({
+          cloud_name: 'crystalstream',
+          upload_preset: 'toux5lqh',
+        }, (error, result) => {
+          if (!error) {
+            let tmp = '';
+            for (let img of result ) {
+              tmp += `<img src="${img.url}" alt="">`;
+            }
+            updateFeed(userPic, tmp);
+
+            socket.emit('newMessage', {
+              roomID,
+              user,
+              userPic,
+              message: tmp
+            })
+          }
+        });
+      });
+
     });
   </script>
 </head>
@@ -80,7 +104,7 @@
 	<div class="container">
 		<div class="titlePanel">
 			<h1>ChatCAT | <%= room %> </h1>
-		</div>
+    </div>
 		<div class="controls">
 			<div class="userPicHolder"><img src="<%= user.profilePic %>" alt="<%= user.fullName %>"></div>
 			<p class="userName"><%= user.fullName %></p>
