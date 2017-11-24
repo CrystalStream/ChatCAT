@@ -24,6 +24,6 @@ app.use('/', chatCat.router)
 app.use(express.static('public'))
 
 // Listen to the port
-app.listen(process.env.PORT || 3000, () => {
+chatCat.ioServer(app).listen(process.env.PORT || 3000, () => {
 	console.log("ChatCAT Running on port 3000");
 })

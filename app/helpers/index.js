@@ -2,6 +2,7 @@
 
 const router = require('express').Router();
 const db = require('../db');
+const crypto = require('crypto');
 
 // Iterate over the routes and mount them
 let _registerRoute = (routes, method) => {
@@ -45,6 +46,22 @@ let findOne = profileId => {
 	})
 }
 
+// Find a room by a given name
+let findRoomByName = (allRooms, room) => {
+  let findRoom = allRooms.findIndex( (ele) => ele.room === room)
+  return findRoom > -1;
+}
+
+// Generate a unique id
+let randomHex = () => {
+  return crypto.randomBytes(24).toString('hex');
+}
+
+// Find room by the given id
+let findRoomById = (allRooms, roomID) => {
+  return allRooms.find( (room) =>room.roomID === roomID );
+}
+
 // Create a new user and return that instance
 let createNewUser = profile => {
 	return new Promise( (resolve, reject) => {
@@ -73,5 +90,8 @@ module.exports = {
 	findOne,
 	createNewUser,
 	findById,
-	isAuthenticated
+  isAuthenticated,
+  findRoomByName,
+  randomHex,
+  findRoomById
 }

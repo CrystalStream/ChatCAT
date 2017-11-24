@@ -1,5 +1,6 @@
 const helpers = require('../helpers');
 const passport = require('passport');
+const config = require('../config');
 
 module.exports = () => {
 	let routes = {
@@ -8,10 +9,17 @@ module.exports = () => {
 				res.render('login')
 			},
 			'/rooms': [helpers.isAuthenticated, (req, res, next) => {
-				res.render('rooms', {user: req.user})
+				res.render('rooms', {user: req.user, host: config.HOST})
 			}],
-			'/chat': [helpers.isAuthenticated, (req, res, next) => {
-				res.render('chatroom', {user: req.user})
+			'/chat/:id': [helpers.isAuthenticated, (req, res, next) => {
+        let getRoom = helpers.findRoomById(req.app.locals.chatrooms, req.params.id)
+        console.log('getRoom: ', getRoom);
+        console.log('req.app.locals.chatrooms: ', req.app.locals.chatrooms);
+        if (!getRoom) {
+          return next();
+        } else {
+          res.render('chatroom', {user: req.user, host: config.HOST, room:getRoom.room, roomID: getRoom.roomID})
+        }
 			}],
 			'/auth/facebook': passport.authenticate('facebook'),
 			'/auth/facebook/callback': passport.authenticate('facebook', {
@@ -27,7 +35,7 @@ module.exports = () => {
 				req.logout();
 				res.redirect('/')
 			}
-		}, 
+		},
 		'post': {},
 		'NA': (req, res, next) => {
 			res.status(404).sendFile(process.cwd() + '/views/404.htm')
