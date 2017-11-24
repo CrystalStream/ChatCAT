@@ -45,6 +45,11 @@ module.exports = (io, app) => {
     socket.on('disconnect', () => {
       let room = helpers.removeUserFromRoom(allrooms, socket);
       if (room) socket.broadcast.to(room.roomID).emit('updateUserList', JSON.stringify(room.users));
+    });
+
+    // When a message is recieve
+    socket.on('newMessage', data => {
+      socket.to(data.roomID).emit('inMessage', JSON.stringify(data) )
     })
   });
 }
