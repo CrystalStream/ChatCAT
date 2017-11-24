@@ -13,8 +13,6 @@ module.exports = () => {
 			}],
 			'/chat/:id': [helpers.isAuthenticated, (req, res, next) => {
         let getRoom = helpers.findRoomById(req.app.locals.chatrooms, req.params.id)
-        console.log('getRoom: ', getRoom);
-        console.log('req.app.locals.chatrooms: ', req.app.locals.chatrooms);
         if (!getRoom) {
           return next();
         } else {

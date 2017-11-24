@@ -79,6 +79,48 @@ let createNewUser = profile => {
 	})
 }
 
+// Add user to room
+let adduserToRoom = (allRooms, data, socket) => {
+  let getRoom = findRoomById(allRooms, data.roomID)
+  if (getRoom) {
+    // Get the active users
+    let userId = socket.request.session.passport.user;
+    //Check if the if the users exists on the room
+    let checkUser = getRoom.users.findIndex( user =>  user.userID === userId );
+
+    // if exits remove it
+    if (checkUser > -1) {
+      getRoom.users.splice(checkUser, 1)
+    }
+
+    // push user to the room
+    getRoom.users.push({
+      socketID: socket.id,
+      userID: userId,
+      user: data.user,
+      userPic: data.userPic
+    });
+
+    // Join the room channel
+    socket.join(data.roomID)
+
+    return getRoom
+  }
+}
+
+// Remove user from room
+let removeUserFromRoom = (allRooms, socket) => {
+  for (let room of allRooms) {
+    let findUSer = room.users.findIndex( user => user.socketID === socket.id)
+
+    if (findUSer > -1) {
+      socket.leave(room.roomID);
+      if (room.users) room.users.splice(findUSer, 1);
+      return room;
+    }
+  }
+}
+
 // middleware to check if the user is authenticated
 let isAuthenticated = (req, res, next) => {
 	if( req.isAuthenticated()) return next();
@@ -93,5 +135,7 @@ module.exports = {
   isAuthenticated,
   findRoomByName,
   randomHex,
-  findRoomById
+  findRoomById,
+  adduserToRoom,
+  removeUserFromRoom
 }

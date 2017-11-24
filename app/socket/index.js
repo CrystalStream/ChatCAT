@@ -20,11 +20,31 @@ module.exports = (io, app) => {
           users: []
         });
 
+
         // Emit the list updated to the creator
         socket.emit('chatRoomList', JSON.stringify(allrooms));
         // Emit the list updated to evryone connected to the rooms page ('/roomslist')
         socket.broadcast.emit('chatRoomList', JSON.stringify(allrooms));
       }
     });
-	});
+  });
+
+  io.of('/chatter').on('connect', socket => {
+    // Join chat room
+    socket.on('join', data => {
+      let userList = helpers.adduserToRoom(allrooms, data, socket);
+      if (userList) {
+        // emit to all but creator
+        socket.broadcast.to(data.roomID).emit('updateUserList', JSON.stringify(userList.users));
+
+        // emit to the creator
+        socket.emit('updateUserList', JSON.stringify(userList.users));
+      }
+    });
+    // When the socket logout
+    socket.on('disconnect', () => {
+      let room = helpers.removeUserFromRoom(allrooms, socket);
+      if (room) socket.broadcast.to(room.roomID).emit('updateUserList', JSON.stringify(room.users));
+    })
+  });
 }

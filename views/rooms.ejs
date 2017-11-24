@@ -13,7 +13,6 @@
 		$(() => {
       let socket = io('<%= host %>' + '/roomslist');
       let renderChatRooms = chatrooms => {
-        console.log('chatrooms: ', chatrooms);
         let roomsListDiv = $('#roomsListUL');
         let listStr = ''
         for (let cat of JSON.parse(chatrooms)) {
