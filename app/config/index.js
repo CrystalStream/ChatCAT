@@ -15,13 +15,13 @@ if( process.env.NODE_ENV === 'production' ) {
 			APP_ID : process.env.FB_APP_ID || "",
 			APP_SECRET: process.env.FB_APP_SECRET || "",
 			CALLBACK_URL: process.env.BASE_URL + "auth/facebook/callback" || "",
-			PROFILE_FIELDS: process.env.PROFILE_FIELDS || []
+			PROFILE_FIELDS: ["id", "displayName", "photos"]
 		},
 		TW: {
 			API_KEY: process.env.TW_API_KEY || "",
 			API_SECRET: process.env.TW_API_SECRET || "",
 			CALLBACK_URL: process.env.BASE_URL + "auth/twitter/callback" || "",
-			PROFILE_FIELDS: process.env.PROFILE_FIELDS || []
+			PROFILE_FIELDS: ["id", "displayName", "photos"]
     },
     REDIS: {
       HOST: redisURI.hostname,
