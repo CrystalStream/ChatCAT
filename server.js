@@ -17,6 +17,16 @@ app.use(chatCat.session)
 app.use(passport.initialize());
 app.use(passport.session())
 
+// Set Morgan middleware
+app.use(require('morgan')('combined', {
+  stream: {
+    write: message => {
+      // Write to logs
+      chatCat.logger.log('info', message);
+    }
+  }
+}))
+
 // Set up the router
 app.use('/', chatCat.router)
 
