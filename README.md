@@ -38,3 +38,7 @@ Then under `app/config/` create a `development.json` file with the following.
   }
 }
 ```
+
+### Build
+
+To build the proyect just make changes and push it to `master` and codeship will deployed to heroku.
