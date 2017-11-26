@@ -2,6 +2,7 @@
 
 const passport = require('passport');
 const config = require('../config');
+const logger = require('../logger');
 const helpers = require('../helpers');
 const fbStrategy = require('passport-facebook').Strategy;
 const twStrategy = require('passport-twitter').Strategy;
@@ -18,7 +19,7 @@ module.exports = () => {
 			.then( user => done(null, user))
 			.catch( err => done(err));
 	})
-	
+
 	let authProcessor = (accessToken, refreshToken, profile, done) => {
 		// Find a use in the local db using profile.id
 		// if use found, return the user data using the done()
@@ -30,7 +31,7 @@ module.exports = () => {
 				} else{
 					helpers.createNewUser(profile)
 					.then( newUser => done(null, newUser))
-					.catch( err => console.error("Error creating new user", err))
+					.catch( err => logger.log('error', 'Cannot Create a new User: ' + err));
 				}
 			})
 	}

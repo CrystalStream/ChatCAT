@@ -1,6 +1,7 @@
 "use strict"
 
 const config = require('../config');
+const logger = require('../logger');
 
 const Mongoose = require('mongoose');
 
@@ -14,7 +15,7 @@ Mongoose.connect(config.DB_URI, {
 
 // Log error if so
 Mongoose.connection.on('error', error => {
-    console.error("MongoDB error", error);
+  logger.log('error', 'Mongoose connection error: ' + error);
 })
 
 // Create the Schema
