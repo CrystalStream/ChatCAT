@@ -1,6 +1,11 @@
 "use strict"
 
 if( process.env.NODE_ENV === 'production' ) {
+
+  let redisURI = require('url').parse(process.env.REDIS_URL);
+  // redis://redistogo:123JFIR23423545Gcsdfwe@asdfwerwe/6793
+  let redisPass = redisURI.auth.split(':')[1];
+
 	// Load all from .env file
 	module.exports = {
 		HOST: process.env.BASE_URL || "",
@@ -17,7 +22,12 @@ if( process.env.NODE_ENV === 'production' ) {
 			API_SECRET: process.env.API_SECRET || "",
 			CALLBACK_URL: process.env.BASE_URL + "auth/twitter/callback" || "",
 			PROFILE_FIELDS: process.env.PROFILE_FIELDS || []
-		}
+    },
+    REDIS: {
+      HOST: redisURI.hostname,
+      PORT: redisURI.port,
+      PASSWORD: redisPass
+    }
 	}
 } else {
 	module.exports = require('./development.json');

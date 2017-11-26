@@ -11,7 +11,9 @@
     'use strict'
 
 		$(() => {
-      let socket = io('<%= host %>' + '/roomslist');
+      let socket = io('<%= host %>' + '/roomslist', {
+        transports: ['websocket']
+      });
       let renderChatRooms = chatrooms => {
         let roomsListDiv = $('#roomsListUL');
         let listStr = ''

@@ -13,5 +13,11 @@
 		"API_SECRET": "461EEjpNsQmUMVOgpdMDLgulY84IgPFf3MtOEyIBDewwf0k6oq",
 		"CALLBACK_URL": "//localhost:3000/auth/twitter/callback",
 		"PROFILE_FIELDS": ["id", "displayName", "photos"]
-	}
+  },
+  "REDIS": {
+    "HOST": "127.0.0.1",
+    "PORT": 6379,
+    "PASSWORD": ""
+
+  }
 }
